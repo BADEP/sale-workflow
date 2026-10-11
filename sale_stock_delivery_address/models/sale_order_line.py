@@ -22,7 +22,6 @@ class SaleOrderLine(models.Model):
         priority = 15
         key = super()._get_stock_reference_key()
         # Check priority
-        if key[0] < priority:
-            if self.dest_address_id:
-                return (priority, self.dest_address_id)
+        if key[0] < priority and self.dest_address_id:
+            return (priority, self.dest_address_id)
         return key

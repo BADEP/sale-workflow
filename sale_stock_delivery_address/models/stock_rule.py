@@ -36,7 +36,7 @@ class StockRule(models.Model):
                 Procurement(
                     proc.product_id,
                     proc.product_qty,
-                    proc.product_uom,
+                    proc.uom_id,
                     dest_address.property_stock_customer,
                     proc.name,
                     proc.origin,
