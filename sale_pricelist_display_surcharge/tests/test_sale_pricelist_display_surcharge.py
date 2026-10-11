@@ -7,6 +7,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestModule(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -31,8 +33,8 @@ class TestModule(BaseCommon):
                     Command.create(
                         {
                             "applied_on": "1_product",
-                            "compute_price": "percentage",
-                            "percent_price": -10.0,
+                            "compute_price": "discount",
+                            "price_discount": -10.0,
                             "date_start": fields.Datetime.now(),
                             "product_tmpl_id": cls.product.product_tmpl_id.id,
                             "show_surcharge": False,
