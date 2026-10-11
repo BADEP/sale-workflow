@@ -4,9 +4,9 @@ import {SaleOrderLineListRenderer} from "@sale/js/sale_order_line_field/sale_ord
 import {patch} from "@web/core/utils/patch";
 
 patch(SaleOrderLineListRenderer.prototype, {
-    get comboColumns() {
-        const columns = super.comboColumns;
-        columns.push("commitment_date");
-        return columns;
-    },
+  get comboColumns() {
+    const columns = super.comboColumns;
+    columns.push("commitment_date");
+    return columns;
+  },
 });
