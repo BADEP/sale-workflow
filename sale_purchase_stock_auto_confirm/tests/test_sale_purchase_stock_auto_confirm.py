@@ -6,6 +6,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestPurchaseSaleStockAutoConfirm(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -19,6 +21,7 @@ class TestPurchaseSaleStockAutoConfirm(BaseCommon):
         )
         cls.mto_route.active = True
         cls.buy_route = cls.env.ref("purchase_stock.route_warehouse0_buy")
+        cls.buy_route.product_selectable = True
         cls.customer = cls.env["res.partner"].create({"name": "New Customer"})
         cls.vendor = cls.env["res.partner"].create({"name": "New Vendor"})
         cls.product_1 = cls.env["product.product"].create(
