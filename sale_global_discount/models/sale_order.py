@@ -197,7 +197,9 @@ class SaleOrder(models.Model):
             base_amount_currency = formatLang(
                 self.env, base_amount, currency_obj=currency
             )
-            order.tax_totals.update(
+            # tax_totals is a Json field: reading it returns a copy
+            tax_totals = order.tax_totals
+            tax_totals.update(
                 {
                     "base_amount": base_amount,
                     "total_amount": total_amount,
@@ -206,7 +208,7 @@ class SaleOrder(models.Model):
                 }
             )
             # Update subtotals and groups by subtotal
-            for group in order.tax_totals["subtotals"]:
+            for group in tax_totals["subtotals"]:
                 group.update(
                     {
                         "base_amount": base_amount,
@@ -227,6 +229,7 @@ class SaleOrder(models.Model):
                             "tax_amount_currency": discounted_tax_amount,
                         }
                     )
+            order.tax_totals = tax_totals
         return res
 
     @api.depends("partner_id", "company_id")
