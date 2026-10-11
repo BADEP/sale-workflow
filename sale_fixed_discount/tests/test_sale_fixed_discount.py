@@ -9,6 +9,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestSaleFixedDiscount(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -47,41 +49,49 @@ class TestSaleFixedDiscount(BaseCommon):
 
     def test_01_discounts(self):
         """Tests multiple discounts in line with taxes."""
-        with Form(self.sale) as sale_order:
-            with sale_order.order_line.edit(0) as line:
-                line.discount_fixed = 20.0
-                self.assertEqual(line.discount, 10.0)
-                self.assertEqual(line.price_subtotal, 180.0)
+        with (
+            Form(self.sale) as sale_order,
+            sale_order.order_line.edit(0) as line,
+        ):
+            line.discount_fixed = 20.0
+            self.assertEqual(line.discount, 10.0)
+            self.assertEqual(line.price_subtotal, 180.0)
 
         self.assertEqual(self.sale.amount_total, 207.00)
 
-        with Form(self.sale) as sale_order:
-            with sale_order.order_line.edit(0) as line:
-                line.product_uom_qty = 2
-                line.price_unit = 200.0
-                self.assertEqual(line.discount, 10.0)
-                self.assertEqual(line.price_subtotal, 360.0)
+        with (
+            Form(self.sale) as sale_order,
+            sale_order.order_line.edit(0) as line,
+        ):
+            line.product_uom_qty = 2
+            line.price_unit = 200.0
+            self.assertEqual(line.discount, 10.0)
+            self.assertEqual(line.price_subtotal, 360.0)
 
         self.assertEqual(self.sale.amount_total, 414.00)
 
-        with Form(self.sale) as sale_order:
-            with sale_order.order_line.edit(0) as line:
-                line.product_uom_qty = 1
-                line.price_unit = 200.0
-                line.discount_fixed = 0.0
-                line.discount = 50.0
-                self.assertEqual(line.price_subtotal, 100.0)
+        with (
+            Form(self.sale) as sale_order,
+            sale_order.order_line.edit(0) as line,
+        ):
+            line.product_uom_qty = 1
+            line.price_unit = 200.0
+            line.discount_fixed = 0.0
+            line.discount = 50.0
+            self.assertEqual(line.price_subtotal, 100.0)
 
         self.assertEqual(self.sale.amount_total, 115.00)
 
-        with Form(self.sale) as sale_order:
-            with sale_order.order_line.new() as line2:
-                line2.product_id = self.product2
-                line2.product_uom_qty = 1
-                line2.price_unit = 100.0
-                line2.discount_fixed = 5.0
-                self.assertEqual(line2.discount, 5.0)
-                self.assertEqual(line2.price_subtotal, 95.0)
+        with (
+            Form(self.sale) as sale_order,
+            sale_order.order_line.new() as line2,
+        ):
+            line2.product_id = self.product2
+            line2.product_uom_qty = 1
+            line2.price_unit = 100.0
+            line2.discount_fixed = 5.0
+            self.assertEqual(line2.discount, 5.0)
+            self.assertEqual(line2.price_subtotal, 95.0)
 
         self.assertEqual(self.sale.amount_total, 224.25)
 
@@ -102,9 +112,11 @@ class TestSaleFixedDiscount(BaseCommon):
         """Test discount_fixed value propagation to account.move.
         Case of editing order line by using UI.
         """
-        with Form(self.sale) as sale_order:
-            with sale_order.order_line.edit(0) as line:
-                line.discount_fixed = 20.0
+        with (
+            Form(self.sale) as sale_order,
+            sale_order.order_line.edit(0) as line,
+        ):
+            line.discount_fixed = 20.0
 
         self.sale.action_confirm()
         self.sale._create_invoices()
@@ -116,13 +128,15 @@ class TestSaleFixedDiscount(BaseCommon):
         self.assertEqual(self.sale.invoice_ids.tax_totals["total_amount"], 207.0)
 
     def test_04_fixed_discount_without_price(self):
-        with Form(self.sale) as sale_order:
-            with sale_order.order_line.edit(0) as line:
-                line.product_uom_qty = 1.0
-                line.price_unit = 0.0
-                line.discount_fixed = 50.0
-                self.assertEqual(line.discount, 0.0)
-                self.assertEqual(line.price_subtotal, 0.0)
+        with (
+            Form(self.sale) as sale_order,
+            sale_order.order_line.edit(0) as line,
+        ):
+            line.product_uom_qty = 1.0
+            line.price_unit = 0.0
+            line.discount_fixed = 50.0
+            self.assertEqual(line.discount, 0.0)
+            self.assertEqual(line.price_subtotal, 0.0)
         self.assertEqual(self.sale.amount_total, 0.0)
 
     def test_05_fixed_discount_invoice(self):
