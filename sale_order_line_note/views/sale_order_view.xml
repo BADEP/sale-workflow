@@ -4,7 +4,7 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
-            <xpath expr="//list/field[@name='name']" position="after">
+            <xpath expr="//list//field[@name='name']" position="after">
                 <field name="note" optional="hide" />
             </xpath>
             <xpath expr="//form/field[@name='name']" position="after">
