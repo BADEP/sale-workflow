@@ -1,18 +1,18 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import Command
+from odoo import Command, fields
 from odoo.exceptions import UserError
 from odoo.tests import users
 
 from odoo.addons.delivery.tests.common import DeliveryCommon
-from odoo.addons.sale.tests.common import SaleCommon
 from odoo.addons.stock.tests.common import TestStockCommon
 
 
-class TestSaleStock(SaleCommon, DeliveryCommon, TestStockCommon):
+class TestSaleStock(DeliveryCommon, TestStockCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -55,6 +55,8 @@ class TestSaleStock(SaleCommon, DeliveryCommon, TestStockCommon):
             cls.product, cls.stock_location, 100
         )
         cls.sale_user.group_ids += cls.env.ref("stock.group_stock_user")
+        # TestStockCommon runs the tests in its own company (cls.company)
+        cls.sale_user.company_ids |= cls.company
 
     def _manual_delivery_wizard(self, records, vals=None):
         if not vals:
@@ -276,7 +278,9 @@ class TestSaleStock(SaleCommon, DeliveryCommon, TestStockCommon):
             'No picking should be created for "manual delivery" orders',
         )
         # create a manual delivery for part of ordered quantity
-        date_now = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        date_now = fields.Datetime.now().replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
         wizard = self._manual_delivery_wizard(
             order.order_line[0],
             {"carrier_id": order.carrier_id.id, "date_planned": date_now},
@@ -318,7 +322,7 @@ class TestSaleStock(SaleCommon, DeliveryCommon, TestStockCommon):
             date_next_week,
         )
         # create a third manual delivery for today (should be mixed with first)
-        new_date_now = datetime.now()
+        new_date_now = fields.Datetime.now()
         wizard = self._manual_delivery_wizard(
             order.order_line[0],
             {"carrier_id": order.carrier_id.id, "date_planned": new_date_now},

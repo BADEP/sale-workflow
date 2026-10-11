@@ -49,7 +49,7 @@ inner join (
     from sale_order_line as sol
     left join stock_move as sm on (
         sm.state != 'cancel'
-        and sm.scrap_id is null
+        and sm.is_scrap is not true
         and sol.product_id = sm.product_id
         and sm.sale_line_id = sol.id
         )
@@ -58,9 +58,9 @@ left join stock_move as sm on sm.id = q.move_id
 left join product_product as pp on pp.id = sol.product_id
 left join product_template as pt on pt.id = pp.product_tmpl_id
 left join stock_location as sl on sl.id = q.location_dest_id
-LEFT JOIN uom_uom sm_product_uom ON sm.product_uom = sm_product_uom.id
+LEFT JOIN uom_uom sm_product_uom ON sm.uom_id = sm_product_uom.id
 LEFT JOIN uom_uom sol_product_uom ON sol.product_uom_id = sol_product_uom.id
-group by sol.id, sm.product_uom, sol.product_uom_id
+group by sol.id, sm.uom_id, sol.product_uom_id
 ) as r
 where r.id = sol.id
     """,
