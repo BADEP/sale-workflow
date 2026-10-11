@@ -8,6 +8,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestSaleAdvancePayment(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -84,10 +86,12 @@ class TestSaleAdvancePayment(BaseCommon):
             cls.currency_euro.active = True
             cls.active_euro = True
         cls.currency_usd = cls.env["res.currency"].search([("name", "=", "USD")])
+        # Odoo 20: a rate dated D applies from D+1 on (strictly before the date)
+        rate_date = fields.Date.subtract(fields.Date.today(), days=1)
         cls.currency_rate = cls.env["res.currency.rate"].search(
             [
                 ("currency_id", "=", cls.currency_usd.id),
-                ("name", "=", fields.Date.today()),
+                ("name", "=", rate_date),
             ]
         )
         if cls.currency_rate:
@@ -97,7 +101,7 @@ class TestSaleAdvancePayment(BaseCommon):
                 {
                     "inverse_company_rate": 1.20,
                     "currency_id": cls.currency_euro.id,
-                    "name": fields.Date.today(),
+                    "name": rate_date,
                 }
             )
 
@@ -358,12 +362,14 @@ class TestSaleAdvancePayment(BaseCommon):
         # Adjust invoice_policy method to then do a partial invoice with a total amount
         # smaller than the pre-payment.
         self.product_1.invoice_policy = "delivery"
+        self.product_2.invoice_policy = "delivery"
+        self.product_3.invoice_policy = "delivery"
+        # Odoo 20: line.invoice_policy is a non-stored compute without trigger
+        self.sale_order_1.order_line.invalidate_recordset(["invoice_policy"])
         self.order_line_1.qty_delivered = 10.0
         self.assertEqual(self.order_line_1.qty_to_invoice, 10.0)
-        self.product_2.invoice_policy = "delivery"
         self.order_line_2.qty_delivered = 0.0
         self.assertEqual(self.order_line_2.qty_to_invoice, 0.0)
-        self.product_3.invoice_policy = "delivery"
         self.order_line_3.qty_delivered = 0.0
         self.assertEqual(self.order_line_3.qty_to_invoice, 0.0)
         self.sale_order_1._create_invoices()
