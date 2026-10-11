@@ -8,6 +8,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestProductCustomerInfoSale(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -121,7 +123,7 @@ class TestProductCustomerInfoSale(BaseCommon):
                 "pricelist_id": pricelist.id,
                 "applied_on": "0_product_variant",
                 "product_id": product.id,
-                "compute_price": "formula",
+                "compute_price": "markup",
                 "base": "partner",
             }
         )
