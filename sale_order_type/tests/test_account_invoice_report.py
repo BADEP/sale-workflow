@@ -6,6 +6,8 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 @tagged("post_install", "-at_install")
 class TestAccountInvoiceReport(AccountTestInvoicingCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
