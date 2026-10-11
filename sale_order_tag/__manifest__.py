@@ -3,19 +3,18 @@
 
 {
     "name": "Sale Order Tags",
-    "summary": """Adds Tags to Sales Orders.""",
+    "summary": "Adds Tags to Sales Orders.",
     "author": "Patrick Wilson, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/sale-workflow",
     "category": "Sale",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["crm", "sale_management"],
     "data": [
         "data/sale_order_tag_data.xml",
-        "security/ir.model.access.csv",
-        "security/sale_order_tag_security.xml",
         "views/sale_order_tag.xml",
         "views/sale_order.xml",
+        "security/ir.access.csv",
     ],
     "application": False,
     "development_status": "Beta",
