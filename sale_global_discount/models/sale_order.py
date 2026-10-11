@@ -71,9 +71,11 @@ class SaleOrder(models.Model):
             return True
         taxes_keys = {}
         for line in self.order_line.filtered(
-            lambda _line: not _line.display_type
-            and _line.product_id
-            and not _line.product_id.bypass_global_discount
+            lambda _line: (
+                not _line.display_type
+                and _line.product_id
+                and not _line.product_id.bypass_global_discount
+            )
         ):
             if not line.tax_ids:
                 raise exceptions.UserError(
