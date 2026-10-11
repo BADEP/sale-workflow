@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="minimum_amount_block_reason" model="sale.approval.block.reason">
         <field name="name">Minimum Amount per Customer</field>
