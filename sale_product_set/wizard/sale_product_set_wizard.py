@@ -42,13 +42,14 @@ class SaleProductSetWizard(models.TransientModel):
             else:
                 # Fallback to all lines from current set
                 return super()._compute_product_set_line_ids()
+        return None
 
     def _check_partner(self):
         """Validate order partner against product set's partner if any."""
         if not self.product_set_id.partner_id or self.env.context.get(
             "product_set_add_skip_validation"
         ):
-            return
+            return None
         allowed_partners = self._allowed_order_partners()
         if self.order_id.partner_id not in allowed_partners:
             raise exceptions.ValidationError(

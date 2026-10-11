@@ -18,7 +18,7 @@ class ProductSetLine(models.Model):
                 "display_type": self.display_type,
                 "sequence": sequence,
             }
-        res = {
+        return {
             "order_id": order.id,
             "product_id": self.product_id.id,
             "product_uom_qty": self.quantity * quantity,
@@ -31,5 +31,3 @@ class ProductSetLine(models.Model):
             "discount": self.discount,
             "company_id": self.company_id.id,
         }
-
-        return res
