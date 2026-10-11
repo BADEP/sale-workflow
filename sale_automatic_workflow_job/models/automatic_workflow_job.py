@@ -51,6 +51,7 @@ class AutomaticWorkflowJob(models.Model):
     def _do_send_order_confirmation_mail(self, sale):
         if self.env.context.get("auto_delay_do_validation_finished"):
             return super()._do_send_order_confirmation_mail(sale)
+        return None
 
     def _validate_sale_orders(self, domain_filter):
         with_context = self.with_context(

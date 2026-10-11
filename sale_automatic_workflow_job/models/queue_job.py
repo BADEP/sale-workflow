@@ -11,11 +11,10 @@ class QueueJob(models.Model):
 
     def _related_action_sale_automatic_workflow(self):
         obj = self.args[0]
-        action = {
+        return {
             "name": self.env._("Sale Automatic Workflow Job"),
             "type": "ir.actions.act_window",
             "res_model": obj._name,
             "view_mode": "form",
             "res_id": obj.id,
         }
-        return action
