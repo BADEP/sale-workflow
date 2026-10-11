@@ -28,7 +28,7 @@ class ProductElaborationMixin(models.AbstractModel):
         if not str2bool(
             self.env["ir.config_parameter"]
             .sudo()
-            .get_param("sale_elaboration.auto_notes", True)
+            .get_str("sale_elaboration.auto_notes", True)
         ):
             return
         for line in self:
