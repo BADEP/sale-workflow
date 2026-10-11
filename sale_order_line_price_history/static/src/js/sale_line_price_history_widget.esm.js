@@ -1,12 +1,12 @@
-import {Component} from "@odoo/owl";
+import {Component, usePlugin} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {standardWidgetProps} from "@web/views/widgets/standard_widget_props";
-import {useService} from "@web/core/utils/hooks";
+import {ActionManagerPlugin} from "@web/webclient/actions/action_plugin";
 
 export class PriceHistoryWidget extends Component {
   setup() {
     super.setup();
-    this.actionService = useService("action");
+    this.actionService = usePlugin(ActionManagerPlugin);
   }
 
   viewPriceHistory() {

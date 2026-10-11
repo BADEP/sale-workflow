@@ -7,7 +7,7 @@
         <div>
             <a
                 tabindex="0"
-                t-on-click="setPriceHistory"
+                t-on-click="this.setPriceHistory"
                 class="fa fa-check p-1"
                 title="Set Historic Price"
             />

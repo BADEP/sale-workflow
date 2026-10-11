@@ -26,7 +26,6 @@ class SaleOrderLinePriceHistory(models.TransientModel):
     )
     product_id = fields.Many2one(
         comodel_name="product.product",
-        string="Product",
         default=lambda self: self._default_product_id(),
     )
     partner_id = fields.Many2one(
@@ -75,7 +74,7 @@ class SaleOrderLinePriceHistory(models.TransientModel):
         sol_limit = (
             self.env["ir.config_parameter"]
             .sudo()
-            .get_param("sale_order_line_price_history.order_line_limit", default="20")
+            .get_str("sale_order_line_price_history.order_line_limit", default="20")
         )
         order_lines = self.env["sale.order.line"].search(domain, limit=int(sol_limit))
         order_lines -= self.sale_order_line_id
@@ -101,7 +100,6 @@ class SaleOrderLinePriceHistoryline(models.TransientModel):
 
     history_id = fields.Many2one(
         comodel_name="sale.order.line.price.history",
-        string="History",
     )
     target_sale_order_line_id = fields.Many2one(
         comodel_name="sale.order.line",

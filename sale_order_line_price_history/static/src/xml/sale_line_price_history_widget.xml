@@ -5,10 +5,10 @@
 <templates xml:space="preserve">
     <t t-name="sale_order_line_price_history.price_history_widget">
         <a
-            t-if="props.record.data.qty_invoiced === 0"
+            t-if="this.props.record.data.qty_invoiced === 0"
             class="fa fa-history"
             tabindex="0"
-            t-on-click="viewPriceHistory"
+            t-on-click="this.viewPriceHistory"
             title="Price History"
         />
     </t>
