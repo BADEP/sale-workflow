@@ -27,3 +27,4 @@ class SaleOrder(models.Model):
             to_super |= sale
         if to_super:
             return super(SaleOrder, to_super)._compute_warehouse_id()
+        return None
