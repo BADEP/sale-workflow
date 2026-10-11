@@ -171,7 +171,7 @@ class TestMultiCompanyCommon(AccountTestInvoicingCommon):
 
         self.product_uom_unit = self.env.ref("uom.product_uom_unit")
 
-        order = SaleOrder.create(
+        return SaleOrder.create(
             {
                 "partner_id": customer.id,
                 "company_id": company.id,
@@ -191,4 +191,3 @@ class TestMultiCompanyCommon(AccountTestInvoicingCommon):
                 ],
             }
         )
-        return order

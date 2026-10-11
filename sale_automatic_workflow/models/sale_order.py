@@ -59,6 +59,7 @@ class SaleOrder(models.Model):
                 "message": self.workflow_process_id.warning,
             }
             return {"warning": warning}
+        return None
 
     @api.depends("partner_id", "user_id", "workflow_process_id")
     def _compute_team_id(self):  # pylint: disable=W8110
@@ -66,14 +67,14 @@ class SaleOrder(models.Model):
         if self.workflow_process_id.team_id:
             self.team_id = self.workflow_process_id.team_id.id
 
-    def _create_invoices(self, grouped=False, final=False, date=None):
+    def _create_invoices(self, *args, **kwargs):
         for order in self:
             if not order.workflow_process_id.invoice_service_delivery:
                 continue
             for line in order.order_line:
                 if line.qty_delivered_method == "manual" and not line.qty_delivered:
                     line.write({"qty_delivered": line.product_uom_qty})
-        return super()._create_invoices(grouped=grouped, final=final, date=date)
+        return super()._create_invoices(*args, **kwargs)
 
     def write(self, vals):
         if vals.get("state") == "sale" and vals.get("date_order"):
