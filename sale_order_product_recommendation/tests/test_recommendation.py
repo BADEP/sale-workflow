@@ -155,12 +155,11 @@ class RecommendationCaseTests(RecommendationCase):
         self.env.user.group_ids |= self.env.ref("uom.group_uom")
         # Add 2 dozens of product 2
         wizard = self.wizard()
-        with Form(wizard) as wizard_f:
-            with wizard_f.line_ids.edit(0) as line_f:
-                self.assertEqual(line_f.product_id, self.prod_2)
-                self.assertEqual(line_f.sale_uom_id, unit)
-                line_f.sale_uom_id = dozen
-                line_f.units_included = 2
+        with Form(wizard) as wizard_f, wizard_f.line_ids.edit(0) as line_f:
+            self.assertEqual(line_f.product_id, self.prod_2)
+            self.assertEqual(line_f.sale_uom_id, unit)
+            line_f.sale_uom_id = dozen
+            line_f.units_included = 2
         wizard.action_accept()
         # Check it's properly added
         self.assertRecordValues(
@@ -175,12 +174,11 @@ class RecommendationCaseTests(RecommendationCase):
         )
         # Use a new wizard to change product 2 to 10 units
         wizard = self.wizard()
-        with Form(wizard) as wizard_f:
-            with wizard_f.line_ids.edit(0) as line_f:
-                self.assertEqual(line_f.product_id, self.prod_2)
-                self.assertEqual(line_f.sale_uom_id, dozen)
-                line_f.sale_uom_id = unit
-                line_f.units_included = 10
+        with Form(wizard) as wizard_f, wizard_f.line_ids.edit(0) as line_f:
+            self.assertEqual(line_f.product_id, self.prod_2)
+            self.assertEqual(line_f.sale_uom_id, dozen)
+            line_f.sale_uom_id = unit
+            line_f.units_included = 10
         wizard.action_accept()
         # Check it's properly changed
         self.assertRecordValues(
