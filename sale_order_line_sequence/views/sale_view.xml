@@ -11,7 +11,7 @@
                 >{'default_sequence': max_line_sequence}</attribute>
             </field>
             <xpath
-                expr="//field[@name='order_line']/list/field[@name='product_id']"
+                expr="//field[@name='order_line']/list/column[@name='product_and_description']"
                 position="before"
             >
                 <field name="visible_sequence" string="#" optional="show" />

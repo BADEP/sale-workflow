@@ -20,10 +20,10 @@ class AccountMoveLine(models.Model):
                 or len(rec.sale_line_ids) > 1
             ):
                 sequences = sorted(
-                    set(
+                    {
                         (sl.visible_sequence, sl.order_id.name)
                         for sl in rec.sale_line_ids
-                    )
+                    }
                 )
                 rec.related_so_sequence = ", ".join(
                     f"{seq[1]}/{seq[0]}" for seq in sequences
