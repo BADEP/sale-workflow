@@ -1,12 +1,14 @@
 # Copyright 2018-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from typing import ClassVar
+
 from odoo import api, fields, models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = ["sale.order.line", "product.secondary.unit.mixin"]
+    _inherit: ClassVar[list[str]] = ["sale.order.line", "product.secondary.unit.mixin"]
     _name = "sale.order.line"
-    _secondary_unit_fields = {
+    _secondary_unit_fields: ClassVar[dict[str, str]] = {
         "qty_field": "product_uom_qty",
         "uom_field": "product_uom_id",
     }
