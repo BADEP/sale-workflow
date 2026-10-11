@@ -184,16 +184,10 @@ class TestSaleOrderInvoiceAmount(BaseCommon):
             fields.Date.from_string("2024-01-01"),
         )
         aml1 = self.order_line_1._prepare_invoice_line(
-            **{
-                "price_unit": price_foreign_currency_1,
-                "currency_id": self.currency_eur.id,
-            }
+            price_unit=price_foreign_currency_1, currency_id=self.currency_eur.id
         )
         aml2 = self.order_line_2._prepare_invoice_line(
-            **{
-                "price_unit": price_foreign_currency_2,
-                "currency_id": self.currency_eur.id,
-            }
+            price_unit=price_foreign_currency_2, currency_id=self.currency_eur.id
         )
         test_invoice = self.env["account.move"].create(
             {
@@ -283,16 +277,10 @@ class TestSaleOrderInvoiceAmount(BaseCommon):
             fields.Date.from_string("2024-01-01"),
         )
         aml1 = self.order_line_1._prepare_invoice_line(
-            **{
-                "price_unit": price_foreign_currency_1,
-                "currency_id": self.currency_cad.id,
-            }
+            price_unit=price_foreign_currency_1, currency_id=self.currency_cad.id
         )
         aml2 = self.order_line_2._prepare_invoice_line(
-            **{
-                "price_unit": price_foreign_currency_2,
-                "currency_id": self.currency_cad.id,
-            }
+            price_unit=price_foreign_currency_2, currency_id=self.currency_cad.id
         )
         test_invoice = self.env["account.move"].create(
             {
@@ -338,22 +326,13 @@ class TestSaleOrderInvoiceAmount(BaseCommon):
             fields.Date.from_string("2024-01-01"),
         )
         aml1 = self.order_line_1._prepare_invoice_line(
-            **{
-                "price_unit": price_foreign_currency_1,
-                "currency_id": self.currency_cad.id,
-            }
+            price_unit=price_foreign_currency_1, currency_id=self.currency_cad.id
         )
         aml2 = self.order_line_2._prepare_invoice_line(
-            **{
-                "price_unit": price_foreign_currency_2,
-                "currency_id": self.currency_cad.id,
-            }
+            price_unit=price_foreign_currency_2, currency_id=self.currency_cad.id
         )
         aml3 = self.order_line_3._prepare_invoice_line(
-            **{
-                "price_unit": price_foreign_currency_3,
-                "currency_id": self.currency_cad.id,
-            }
+            price_unit=price_foreign_currency_3, currency_id=self.currency_cad.id
         )
         test_invoice = self.env["account.move"].create(
             [
