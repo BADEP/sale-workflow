@@ -181,16 +181,20 @@ class ProductPricelistItem(models.Model):
         is_applicable = True
         if self.applied_on == "3_1_global_product_template":
             total_qty = qty_data["by_template"].get(product.product_tmpl_id, 0.0)
-            if self.min_quantity and total_qty < self.min_quantity:
-                is_applicable = False
-            elif self.global_product_tmpl_id != product.product_tmpl_id:
+            if (
+                self.min_quantity
+                and total_qty < self.min_quantity
+                or self.global_product_tmpl_id != product.product_tmpl_id
+            ):
                 is_applicable = False
         elif self.applied_on == "3_2_global_product_category":
             total_qty = qty_data["by_categ"].get(product.categ_id, 0.0)
-            if self.min_quantity and total_qty < self.min_quantity:
-                is_applicable = False
-            elif not product.categ_id.parent_path.startswith(
-                self.global_categ_id.parent_path
+            if (
+                self.min_quantity
+                and total_qty < self.min_quantity
+                or not product.categ_id.parent_path.startswith(
+                    self.global_categ_id.parent_path
+                )
             ):
                 is_applicable = False
         return is_applicable
