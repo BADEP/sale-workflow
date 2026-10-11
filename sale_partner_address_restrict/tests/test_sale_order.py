@@ -52,9 +52,8 @@ class TestSaleOrder(BaseCommon):
         order_form = Form(self.env["sale.order"])
         order_form.partner_id = self.partner1
         sale_order = order_form.save()
-        with self.assertRaises(ValidationError):
-            with Form(sale_order) as sale_order:
-                sale_order.partner_shipping_id = self.partner3
+        with self.assertRaises(ValidationError), Form(sale_order) as sale_order:
+            sale_order.partner_shipping_id = self.partner3
 
     def test_sale_order_partner_allowed(self):
         self.env.company.sale_partner_address_restriction = False
