@@ -29,8 +29,10 @@ class SaleOrderLine(models.Model):
         )[:1]
         if not customerinfo:
             customerinfo = self.product_id.customer_ids.filtered(
-                lambda pc: pc.elaboration_ids
-                and pc.partner_id == self.order_id.partner_id.commercial_partner_id
+                lambda pc: (
+                    pc.elaboration_ids
+                    and pc.partner_id == self.order_id.partner_id.commercial_partner_id
+                )
             )[:1]
         return customerinfo
 
