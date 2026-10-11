@@ -3,12 +3,11 @@
 # Copyright 2018 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from datetime import datetime
 from unittest import mock
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import Command
+from odoo import Command, fields
 from odoo.tests.common import TransactionCase
 
 
@@ -87,7 +86,7 @@ class TestDeliveryState(TransactionCase):
         )
 
         # --- SALE ORDER ---
-        sale_order = self.env["sale.order"].create(
+        return self.env["sale.order"].create(
             {
                 "partner_id": partner_demo.id,
                 "partner_invoice_id": partner_demo.id,
@@ -97,9 +96,9 @@ class TestDeliveryState(TransactionCase):
                 "campaign_id": utm_campaign_email_campaign_products.id,
                 "medium_id": self.env.ref("utm.utm_medium_email").id,
                 "source_id": utm_source.id,
-                "date_order": (datetime.today() - relativedelta(months=1)).strftime(
-                    "%Y-%m-%d %H:%M"
-                ),
+                "date_order": (
+                    fields.Datetime.now() - relativedelta(months=1)
+                ).strftime("%Y-%m-%d %H:%M"),
                 "order_line": [
                     Command.create(
                         {
@@ -125,7 +124,6 @@ class TestDeliveryState(TransactionCase):
                 ],
             }
         )
-        return sale_order
 
     def _mock_delivery(self, delivery_prod=None):
         delivery_prod = delivery_prod or self.delivery_cost
