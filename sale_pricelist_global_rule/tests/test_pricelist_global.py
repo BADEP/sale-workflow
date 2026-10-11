@@ -2,6 +2,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestPricelistGlobal(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -96,8 +98,8 @@ class TestPricelistGlobal(BaseCommon):
                 "pricelist_id": cls.pricelist_global.id,
                 "applied_on": "3_1_global_product_template",
                 "global_product_tmpl_id": cls.t_shirt.id,
-                "compute_price": "percentage",
-                "percent_price": 10,
+                "compute_price": "discount",
+                "price_discount": 10,
                 "min_quantity": 15,
             }
         )
@@ -106,8 +108,8 @@ class TestPricelistGlobal(BaseCommon):
                 "pricelist_id": cls.pricelist_global.id,
                 "applied_on": "3_2_global_product_category",
                 "global_categ_id": cls.categ_1.id,
-                "compute_price": "percentage",
-                "percent_price": 10,
+                "compute_price": "discount",
+                "price_discount": 10,
                 "min_quantity": 20,
             }
         )
@@ -116,8 +118,8 @@ class TestPricelistGlobal(BaseCommon):
                 "pricelist_id": cls.pricelist_base.id,
                 "applied_on": "1_product",
                 "product_tmpl_id": cls.t_shirt.id,
-                "compute_price": "percentage",
-                "percent_price": 20,
+                "compute_price": "discount",
+                "price_discount": 20,
                 "min_quantity": 5,
             }
         )
@@ -251,7 +253,7 @@ class TestPricelistGlobal(BaseCommon):
         """
         self.pricelist_item_by_product.write(
             {
-                "compute_price": "formula",
+                "compute_price": "markup",
                 "price_discount": 20,
             }
         )
@@ -493,7 +495,7 @@ class TestPricelistGlobal(BaseCommon):
         """
         self.pricelist_item_by_categ.write(
             {
-                "compute_price": "formula",
+                "compute_price": "markup",
                 "price_discount": 20,
             }
         )
@@ -806,44 +808,44 @@ class TestPricelistGlobal(BaseCommon):
             - product_3: qty=1, price=300, discount=0. No pricelist applied
         Case 1:
             - Based on list price
-            - Global pricelist compute_price=formula price_discount=10
+            - Global pricelist compute_price=markup price_discount=10
             - product_m_red: price=90, discount=0
             - product_m_black: price=90, discount=0
         Case 2:
             - Based on list price
-            - Global pricelist compute_price=percentage percent_price=10
+            - Global pricelist compute_price=discount price_discount=10
             - product_m_red: price=100, discount=10
             - product_m_black: price=100, discount=10
         Case 3:
             - Based on other pricelist
-            - Global pricelist compute_price=formula price_discount=10
-            - base pricelist compute_price=formula price_discount=20
+            - Global pricelist compute_price=markup price_discount=10
+            - base pricelist compute_price=markup price_discount=20
             - product_m_red: price=72, discount=0
             - product_m_black: price=72, discount=0
         Case 4:
             - Based on other pricelist
-            - Global pricelist compute_price=percentage percent_price=10
-            - base pricelist compute_price=formula price_discount=20
+            - Global pricelist compute_price=discount price_discount=10
+            - base pricelist compute_price=markup price_discount=20
             - product_m_red: price=80, discount=10
             - product_m_black: price=80, discount=10
         Case 5:
             - Based on other pricelist
-            - Global compute_price=formula price_discount=10
-            - base compute_price=percentage percent_price=20
+            - Global compute_price=markup price_discount=10
+            - base compute_price=discount price_discount=20
             - product_m_red: price=80, discount=10
             - product_m_black: price=80, discount=10
         Case 6:
             - Based on other pricelist
-            - Global compute_price=percentage percent_price=10
-            - base compute_price=percentage percent_price=20
+            - Global compute_price=discount price_discount=10
+            - base compute_price=discount price_discount=20
             - product_m_red: price=100, discount=28
             - product_m_black: price=100, discount=28
         """
         self.env.user.group_ids += self.env.ref("sale.group_discount_per_so_line")
-        values_with_discount10 = {"compute_price": "formula", "price_discount": 10}
-        values_without_discount10 = {"compute_price": "percentage", "percent_price": 10}
-        values_with_discount20 = {"compute_price": "formula", "price_discount": 20}
-        values_without_discount20 = {"compute_price": "percentage", "percent_price": 20}
+        values_with_discount10 = {"compute_price": "markup", "price_discount": 10}
+        values_without_discount10 = {"compute_price": "discount", "price_discount": 10}
+        values_with_discount20 = {"compute_price": "markup", "price_discount": 20}
+        values_without_discount20 = {"compute_price": "discount", "price_discount": 20}
         # case 1
         self.pricelist_item_by_product.write(values_with_discount10)
         self.assertFalse(self.pricelist_item_by_product._show_discount())

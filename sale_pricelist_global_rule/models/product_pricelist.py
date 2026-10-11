@@ -11,18 +11,8 @@ class ProductPricelistItem(models.Model):
             ("3_2_global_product_category", "Global - Product category"),
         ],
         ondelete={
-            "3_1_global_product_template": "set default",
-            "3_2_global_product_category": "set default",
-        },
-    )
-    display_applied_on = fields.Selection(
-        selection_add=[
-            ("3_1_global_product_template", "Global - Product template"),
-            ("3_2_global_product_category", "Global - Product category"),
-        ],
-        ondelete={
-            "3_1_global_product_template": "set default",
-            "3_2_global_product_category": "set default",
+            "3_1_global_product_template": "set 3_global",
+            "3_2_global_product_category": "set 3_global",
         },
     )
     global_product_tmpl_id = fields.Many2one(
@@ -70,6 +60,18 @@ class ProductPricelistItem(models.Model):
         return res
 
     @api.depends("global_product_tmpl_id", "global_categ_id")
+    def _compute_applied_on(self):
+        res = super()._compute_applied_on()
+        for item in self:
+            if item.categ_id or item.product_tmpl_id:
+                continue
+            if item.global_categ_id:
+                item.applied_on = "3_2_global_product_category"
+            elif item.global_product_tmpl_id:
+                item.applied_on = "3_1_global_product_template"
+        return res
+
+    @api.depends("global_product_tmpl_id", "global_categ_id")
     def _compute_name(self):
         res = super()._compute_name()
         for item in self:
@@ -86,24 +88,6 @@ class ProductPricelistItem(models.Model):
             ):
                 item.name = self.env._(
                     "Global product: %s", item.global_product_tmpl_id.display_name
-                )
-        return res
-
-    @api.onchange("display_applied_on")
-    def _onchange_display_applied_on(self):
-        res = super()._onchange_display_applied_on()
-        for item in self:
-            if item.display_applied_on in [
-                "3_2_global_product_category",
-                "3_1_global_product_template",
-            ]:
-                item.update(
-                    {
-                        "product_id": None,
-                        "product_tmpl_id": None,
-                        "categ_id": None,
-                        "applied_on": item.display_applied_on,
-                    }
                 )
         return res
 
@@ -157,7 +141,7 @@ class ProductPricelistItem(models.Model):
                 )
         return super().write(values)
 
-    def _is_applicable_for(self, product, qty_in_product_uom):
+    def _is_applicable_for(self, product, quantity, *, uom=None, **kwargs):
         """Check whether the current rule is valid
         for the given sale order and cummulated quantity.
         :param product_template: browse_record(product.template)
@@ -177,7 +161,7 @@ class ProductPricelistItem(models.Model):
             "3_1_global_product_template",
             "3_2_global_product_category",
         ]:
-            return super()._is_applicable_for(product, qty_in_product_uom)
+            return super()._is_applicable_for(product, quantity, uom=uom, **kwargs)
         is_applicable = True
         if self.applied_on == "3_1_global_product_template":
             total_qty = qty_data["by_template"].get(product.product_tmpl_id, 0.0)
