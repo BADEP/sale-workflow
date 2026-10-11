@@ -42,7 +42,7 @@ class CustomerPortal(CustomerPortal):
         login_required = (
             request.env["ir.config_parameter"]
             .sudo()
-            .get_param(
+            .get_str(
                 "portal_sale_confirm_require_login.portal_sale_access_login_required",
             )
         )

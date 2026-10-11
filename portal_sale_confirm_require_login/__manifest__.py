@@ -6,7 +6,7 @@
         "Force login/signup to access quotations via token and require partner "
         "information completion before confirming from the portal"
     ),
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Sales",
     "author": "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/sale-workflow",

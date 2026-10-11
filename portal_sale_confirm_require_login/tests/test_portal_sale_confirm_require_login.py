@@ -30,7 +30,7 @@ class TestPortalSaleConfirmRequireLogin(HttpCase):
         cls.portal_url = (
             f"/my/orders/{cls.order.id}?access_token={cls.order.access_token}"
         )
-        cls.env["ir.config_parameter"].sudo().set_param(
+        cls.env["ir.config_parameter"].sudo().set_str(
             "portal_sale_confirm_require_login.portal_sale_access_login_required",
             True,
         )
@@ -59,7 +59,7 @@ class TestPortalSaleConfirmRequireLogin(HttpCase):
         )
 
     def test_missing_partner_data_requires_completion(self):
-        self.env["ir.config_parameter"].sudo().set_param(
+        self.env["ir.config_parameter"].sudo().set_str(
             "portal_sale_confirm_require_login.portal_sale_access_login_required",
             False,
         )

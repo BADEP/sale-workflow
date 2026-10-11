@@ -21,13 +21,13 @@ Portal Sale Confirm Require Login
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fsale--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/sale-workflow/tree/19.0/portal_sale_confirm_require_login
+    :target: https://github.com/OCA/sale-workflow/tree/20.0/portal_sale_confirm_require_login
     :alt: OCA/sale-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/sale-workflow-19-0/sale-workflow-19-0-portal_sale_confirm_require_login
+    :target: https://translation.odoo-community.org/projects/sale-workflow-20-0/sale-workflow-20-0-portal_sale_confirm_require_login
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/sale-workflow&target_branch=19.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/sale-workflow&target_branch=20.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -51,10 +51,10 @@ under **Quotations & Orders**.
 
 This option is disabled by default.
 
-- Enabled: public users must log in before accessing quotations or sale
-  orders from portal links.
-- Disabled: public users can access those documents from portal links,
-  but authentication is still required to confirm, sign, or pay them.
+-  Enabled: public users must log in before accessing quotations or sale
+   orders from portal links.
+-  Disabled: public users can access those documents from portal links,
+   but authentication is still required to confirm, sign, or pay them.
 
 Usage
 =====
@@ -63,10 +63,11 @@ Usage
    the access token.
 2. When the customer opens the quotation from the portal:
 
-   - If the customer is not logged in and a portal user already exists
-     for the related partner, they are redirected to the login page.
-   - If the customer is not logged in and no portal user exists yet,
-     they are redirected to the signup page using a secure signup token.
+   -  If the customer is not logged in and a portal user already exists
+      for the related partner, they are redirected to the login page.
+   -  If the customer is not logged in and no portal user exists yet,
+      they are redirected to the signup page using a secure signup
+      token.
 
 3. After logging in or completing the signup process, the customer is
    redirected back to the quotation in the portal.
@@ -85,7 +86,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/sale-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/sale-workflow/issues/new?body=module:%20portal_sale_confirm_require_login%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/sale-workflow/issues/new?body=module:%20portal_sale_confirm_require_login%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -95,9 +96,9 @@ Credits
 Contributors
 ------------
 
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Pilar Vargas
+   -  Pilar Vargas
 
 Maintainers
 -----------
@@ -112,6 +113,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/sale-workflow <https://github.com/OCA/sale-workflow/tree/19.0/portal_sale_confirm_require_login>`_ project on GitHub.
+This module is part of the `OCA/sale-workflow <https://github.com/OCA/sale-workflow/tree/20.0/portal_sale_confirm_require_login>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

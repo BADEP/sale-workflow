@@ -60,59 +60,82 @@
             </attribute>
         </xpath>
         <xpath
-            expr="//div[@name='sale_order_actions']/t[@t-if='sale_order._has_to_be_signed()']/div[1]"
+            expr="//t[@t-if='sale_order._has_to_be_signed()']/a[@data-bs-target='#modalaccept']"
             position="attributes"
         >
             <attribute name="t-if">
-                sale_order._has_to_be_signed()
-                and sale_order._check_partner_mandatory_fields(sale_order.partner_id)
+                sale_order._check_partner_mandatory_fields(sale_order.partner_id)
             </attribute>
         </xpath>
         <xpath
-            expr="//div[@name='sale_order_actions']/t[@t-if='sale_order._has_to_be_signed()']/div[1]"
-            position="after"
-        >
-            <div
-                t-elif="not sale_order._check_partner_mandatory_fields(sale_order.partner_id)
-                    and sale_order._has_to_be_signed()"
-                class="col-sm-auto mt8"
-            >
-                <a
-                    role="button"
-                    class="btn btn-primary"
-                    t-att-href="'/my/account?order_id=%s&amp;redirect=%s' % (
-                        sale_order.id, sale_order.get_portal_url()
-                    )"
-                >
-                    <i class="fa fa-check" />
-                    <t t-if="sale_order._has_to_be_paid()"> Sign &amp; Pay</t>
-                    <t t-else=""> Accept &amp; Sign</t>
-                </a>
-            </div>
-        </xpath>
-        <xpath
-            expr="//div[@name='sale_order_actions']/div[@t-elif='sale_order._has_to_be_paid()']/a"
-            position="attributes"
-        >
-            <attribute name="t-if">
-                sale_order._has_to_be_paid()
-                and sale_order._check_partner_mandatory_fields(sale_order.partner_id)
-            </attribute>
-        </xpath>
-        <xpath
-            expr="//div[@name='sale_order_actions']/div[@t-elif='sale_order._has_to_be_paid()']/a"
+            expr="//t[@t-if='sale_order._has_to_be_signed()']/a[@data-bs-target='#modalaccept']"
             position="after"
         >
             <a
-                t-elif="not sale_order._check_partner_mandatory_fields(sale_order.partner_id)"
-                class="btn btn-primary"
+                t-else=""
+                class="btn btn-primary btn-lg"
                 role="button"
                 t-att-href="'/my/account?order_id=%s&amp;redirect=%s' % (
                     sale_order.id, sale_order.get_portal_url()
                 )"
             >
-                <i class="fa fa-check" />
+                <i class="oi" data-icon="check" />
+                <t t-if="sale_order._has_to_be_paid()">Sign &amp; Pay</t>
+                <t t-else="">Accept &amp; Sign</t>
+            </a>
+        </xpath>
+        <xpath
+            expr="//t[@t-elif='sale_order._has_to_be_paid()']/a[@data-bs-target='#modalaccept']"
+            position="attributes"
+        >
+            <attribute name="t-if">
+                sale_order._check_partner_mandatory_fields(sale_order.partner_id)
+            </attribute>
+        </xpath>
+        <xpath
+            expr="//t[@t-elif='sale_order._has_to_be_paid()']/a[@data-bs-target='#modalaccept']"
+            position="after"
+        >
+            <a
+                t-else=""
+                class="btn btn-primary btn-lg rounded"
+                role="button"
+                t-att-href="'/my/account?order_id=%s&amp;redirect=%s' % (
+                    sale_order.id, sale_order.get_portal_url()
+                )"
+            >
                 <t t-if="not sale_order.signature">Accept &amp; Pay</t>
+                <t t-else="">Pay Now</t>
+            </a>
+        </xpath>
+        <!-- Mobile sticky action bar (new in 20.0) -->
+        <xpath
+            expr="//div[hasclass('o_portal_mobile_action_buttons')]/a[@t-if='mobile_has_to_be_signed'][@data-bs-target='#modalaccept']"
+            position="attributes"
+        >
+            <attribute name="t-if">
+                mobile_has_to_be_signed
+                and sale_order._check_partner_mandatory_fields(sale_order.partner_id)
+            </attribute>
+        </xpath>
+        <xpath
+            expr="//div[hasclass('o_portal_mobile_action_buttons')]/a[@id='o_sale_portal_paynow_mobile']"
+            position="before"
+        >
+            <a
+                t-elif="(mobile_has_to_be_signed or mobile_has_to_be_paid)
+                    and not sale_order._check_partner_mandatory_fields(sale_order.partner_id)"
+                class="btn btn-primary flex-grow-1"
+                role="button"
+                t-att-href="'/my/account?order_id=%s&amp;redirect=%s' % (
+                    sale_order.id, sale_order.get_portal_url()
+                )"
+            >
+                <t t-if="mobile_has_to_be_signed">
+                    <t t-if="sale_order._has_to_be_paid()">Sign &amp; Pay</t>
+                    <t t-else="">Accept &amp; Sign</t>
+                </t>
+                <t t-elif="not sale_order.signature">Accept &amp; Pay</t>
                 <t t-else="">Pay Now</t>
             </a>
         </xpath>
