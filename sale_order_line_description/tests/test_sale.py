@@ -9,6 +9,9 @@ from odoo.addons.base.tests.common import BaseCommon
 
 @tagged("post_install", "-at_install")
 class TestSaleOrderLineDescriptionChange(BaseCommon):
+    # Tests switch user explicitly with @users
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
