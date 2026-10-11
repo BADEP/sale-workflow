@@ -11,6 +11,19 @@ from odoo import models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    def action_update_prices(self):
+        # Removed from sale in 20.0, kept here as this module's button relies on it
+        self.ensure_one()
+        self._recompute_prices()
+        if self.pricelist_id:
+            message = self.env._(
+                "Product prices have been recomputed according to pricelist %s.",
+                self.pricelist_id._get_html_link(),
+            )
+        else:
+            message = self.env._("Product prices have been recomputed.")
+        self.message_post(body=message)
+
     def action_update_names(self):
         lines = self.mapped("order_line")
         lines._compute_name()

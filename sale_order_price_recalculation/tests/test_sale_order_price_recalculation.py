@@ -9,6 +9,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestSaleOrderPriceRecalculation(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -29,7 +31,7 @@ class TestSaleOrderPriceRecalculation(BaseCommon):
                     Command.create(
                         {
                             "applied_on": "3_global",
-                            "compute_price": "formula",
+                            "compute_price": "markup",
                             "base": "list_price",
                         },
                     ),
