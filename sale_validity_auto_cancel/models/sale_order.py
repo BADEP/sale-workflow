@@ -57,5 +57,5 @@ class SaleOrder(models.Model):
             for order in orders:
                 try:
                     order.with_context(company_id=company.id)._action_cancel()
-                except Exception as e:
-                    _logger.error("Failed to auto-cancel %s: %s", order.name, str(e))
+                except Exception:
+                    _logger.exception("Failed to auto-cancel %s", order.name)

@@ -11,6 +11,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestSaleValidityAutoCancel(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -36,8 +38,7 @@ class TestSaleValidityAutoCancel(BaseCommon):
                 )
             ],
         }
-        so = self.SaleOrder.create(vals)
-        return so
+        return self.SaleOrder.create(vals)
 
     def test__prepare_auto_cancel_expired_domain(self):
         """Test the domain returned by _prepare_auto_cancel_expired_domain"""
