@@ -13,6 +13,8 @@ from .test_recommendation_common import RecommendationCase
 
 @freeze_time("2021-10-02 15:30:00")
 class RecommendationCaseTests(RecommendationCase):
+    _test_user_groups = None
+
     def test_recommendations(self):
         """Recommendations are OK."""
         self.new_so.order_line = [

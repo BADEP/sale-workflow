@@ -3,12 +3,11 @@
 # Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Domain
-from odoo.tools import float_compare
 from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
@@ -69,7 +68,7 @@ class SaleOrderRecommendation(models.TransientModel):
 
     def _recommendable_sale_order_lines_domain(self):
         """Domain to find recent SO lines."""
-        start = datetime.now() - timedelta(days=self.months * 30)
+        start = fields.Datetime.now() - timedelta(days=self.months * 30)
         start = fields.Datetime.to_string(start)
         partner = (
             self.order_id.partner_shipping_id
@@ -103,8 +102,7 @@ class SaleOrderRecommendation(models.TransientModel):
         if "is_delivery" in self.env["sale.order.line"]._fields:
             domain.append(("is_delivery", "=", False))
         extended_domain = self._extended_recommendable_sale_order_lines_domain()
-        domain = Domain.AND([domain, extended_domain])
-        return domain
+        return Domain.AND([domain, extended_domain])
 
     def _prepare_recommendation_line_vals(self, group_line, so_line=False):
         """Return the vals dictionary for creating a new recommendation line.
@@ -258,7 +256,6 @@ class SaleOrderRecommendationLine(models.TransientModel):
     units_included = fields.Float()
     wizard_id = fields.Many2one(
         "sale.order.recommendation",
-        "Wizard",
         ondelete="cascade",
         required=True,
         readonly=True,
@@ -310,12 +307,7 @@ class SaleOrderRecommendationLine(models.TransientModel):
             self.sale_line_id.product_uom_qty, self.product_id.uom_id
         )
         # Skip update if quantities are equal
-        if (
-            float_compare(
-                wiz_qty, so_qty, precision_rounding=self.product_id.uom_id.rounding
-            )
-            == 0
-        ):
+        if self.product_id.uom_id.compare(wiz_qty, so_qty) == 0:
             return {}
         vals = {"product_uom_qty": self.units_included}
         if not self.product_uom_readonly:
@@ -380,10 +372,10 @@ class SaleOrderRecommendationLine(models.TransientModel):
             self.product_id,
             self.units_included,
             self.sale_uom_id or self.product_id.uom_id,
-            self.wizard_id.order_id.date_order,
+            date=self.wizard_id.order_id.date_order,
             currency=self.currency_id,
         )
-        price_unit = self.product_id._get_tax_included_unit_price(
+        return self.product_id._get_tax_included_unit_price(
             self.wizard_id.order_id.company_id,
             self.currency_id,
             self.wizard_id.order_id.date_order,
@@ -392,4 +384,3 @@ class SaleOrderRecommendationLine(models.TransientModel):
             product_price_unit=price_rule,
             product_currency=self.currency_id,
         )
-        return price_unit
