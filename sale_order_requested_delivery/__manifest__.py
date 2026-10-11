@@ -3,14 +3,14 @@
 
 {
     "name": "Sale Order Requested Delivery",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Sale",
     "license": "AGPL-3",
-    "summary": """
-        This module adds two new fields
-        `requested_delivery_period_start` and `requested_delivery_period_end`
-        to both the `sale.order` and `sale.order.line` models.
-    """,
+    "summary": (
+        "This module adds two new fields `requested_delivery_period_start` and "
+        "`requested_delivery_period_end` to both the `sale.order` and "
+        "`sale.order.line` models."
+    ),
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/sale-workflow",
     "depends": ["sale"],
