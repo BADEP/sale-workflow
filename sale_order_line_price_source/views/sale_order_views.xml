@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='order_line']/list/field[@name='price_unit']"
+                expr="//field[@name='order_line']/list/column[@name='price_unit']"
                 position="after"
             >
                 <field name="price_source" optional="hide" readonly="1" />
