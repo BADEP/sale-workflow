@@ -17,7 +17,7 @@
                 <field name="commitment_date" />
             </xpath>
             <xpath
-                expr="//field[@name='order_line']/list/field[@name='price_unit']"
+                expr="//field[@name='order_line']/list/column[@name='price_unit']"
                 position="after"
             >
                 <field name="commitment_date" optional="show" />
