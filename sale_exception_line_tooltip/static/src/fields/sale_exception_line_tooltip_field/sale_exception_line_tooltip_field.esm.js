@@ -6,17 +6,17 @@ import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class SaleExceptionLineTooltipField extends Component {
-    static template = "sale_exception_line_tooltip.SaleExceptionLineTooltipField";
-    static props = standardFieldProps;
-    static fieldDependencies = [{name: "exceptions_tooltip", type: "char"}];
+  static template = "sale_exception_line_tooltip.SaleExceptionLineTooltipField";
+  static props = standardFieldProps;
+  static fieldDependencies = [{name: "exceptions_tooltip", type: "char"}];
 }
 
 export const saleExceptionLineTooltipField = {
-    component: SaleExceptionLineTooltipField,
-    fieldDependencies: SaleExceptionLineTooltipField.fieldDependencies,
-    supportedTypes: ["boolean"],
+  component: SaleExceptionLineTooltipField,
+  fieldDependencies: SaleExceptionLineTooltipField.fieldDependencies,
+  supportedTypes: ["boolean"],
 };
 
 registry
-    .category("fields")
-    .add("sale_exception_line_tooltip", saleExceptionLineTooltipField);
+  .category("fields")
+  .add("sale_exception_line_tooltip", saleExceptionLineTooltipField);
