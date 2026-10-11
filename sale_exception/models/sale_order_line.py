@@ -2,13 +2,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import html
+import typing
 
 from odoo import api, fields, models
 from odoo.fields import Command
 
 
 class SaleOrderLine(models.Model):
-    _inherit = ["sale.order.line", "base.exception.method"]
+    _inherit: typing.ClassVar[list[str]] = ["sale.order.line", "base.exception.method"]
     _name = "sale.order.line"
 
     exception_ids = fields.Many2many(
