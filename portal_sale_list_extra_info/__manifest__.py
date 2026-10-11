@@ -7,7 +7,7 @@
     "to the portal view. "
     "It also makes it easier to add other fields in the future.",
     "category": "Sale",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "depends": ["sale"],
     "data": ["views/sale_portal_templates.xml"],
     "author": "Solvos Consultoría Informática, Odoo Community Association (OCA)",
