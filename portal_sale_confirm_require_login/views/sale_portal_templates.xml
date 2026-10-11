@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template
         id="sale_order_portal_template"
@@ -19,8 +20,8 @@
                         and sale_order.state != 'cancel'
                     )
                 )"
-                role="button"
                 class="btn btn-primary d-block"
+                role="button"
                 t-att-href="'/my/account?order_id=%s&amp;redirect=%s' % (sale_order.id, sale_order.get_portal_url())"
             >
                 <i class="fa fa-check" />
@@ -104,8 +105,8 @@
         >
             <a
                 t-elif="not sale_order._check_partner_mandatory_fields(sale_order.partner_id)"
-                role="button"
                 class="btn btn-primary"
+                role="button"
                 t-att-href="'/my/account?order_id=%s&amp;redirect=%s' % (
                     sale_order.id, sale_order.get_portal_url()
                 )"
