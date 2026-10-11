@@ -23,29 +23,33 @@ class TestLineNoPrint(TestSaleCommon):
 
     def test_sale_order_line_display_in_report_cannot_set_to_false(self):
         """Test display_in_report cannot be set to False on priced lines in the UI."""
-        with Form(self.sale_order) as order_form:
-            # Check that display_in_report is not visible/writable if price_total != 0.0
-            with self.assertRaisesRegex(Exception, "display_in_report"):
-                with order_form.order_line.new() as sol:
-                    sol.product_id = self.service_product
-                    sol.product_uom_qty = 1.0
-                    sol.price_unit = 100.0
-                    sol.tax_ids.clear()  # Remove taxes to avoid complexity in the test
-                    self.assertEqual(sol.price_total, 100.0)
-                    self.assertTrue(sol.display_in_report)
-                    sol.display_in_report = False
+        # Check that display_in_report is not visible/writable if price_total != 0.0
+        with (
+            Form(self.sale_order) as order_form,
+            self.assertRaisesRegex(Exception, "display_in_report"),
+            order_form.order_line.new() as sol,
+        ):
+            sol.product_id = self.service_product
+            sol.product_uom_qty = 1.0
+            sol.price_unit = 100.0
+            sol.tax_ids.clear()  # Remove taxes to avoid complexity in the test
+            self.assertEqual(sol.price_total, 100.0)
+            self.assertTrue(sol.display_in_report)
+            sol.display_in_report = False
 
     def test_sale_order_line_display_in_report_can_set_to_false(self):
         """Test display_in_report can be set to False on priced lines in the UI."""
-        with Form(self.sale_order) as order_form:
-            # Check that display_in_report is visible/writable if price_total = 0.0
-            with order_form.order_line.new() as sol:
-                sol.product_id = self.service_product
-                sol.product_uom_qty = 0.0
-                self.assertEqual(sol.price_total, 0.0)
-                self.assertTrue(sol.display_in_report)
-                sol.display_in_report = False
-                self.assertFalse(sol.display_in_report)
+        # Check that display_in_report is visible/writable if price_total = 0.0
+        with (
+            Form(self.sale_order) as order_form,
+            order_form.order_line.new() as sol,
+        ):
+            sol.product_id = self.service_product
+            sol.product_uom_qty = 0.0
+            self.assertEqual(sol.price_total, 0.0)
+            self.assertTrue(sol.display_in_report)
+            sol.display_in_report = False
+            self.assertFalse(sol.display_in_report)
 
     def test_display_in_report_propagation_and_report_selection(self):
         """Test that display_in_report is propagated to invoice lines
