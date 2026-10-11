@@ -3,7 +3,7 @@
 
 {
     "name": "Sale Order Line Tag",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Sales Management",
     "summary": "Add tags to classify sales order line reasons",
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
@@ -11,8 +11,8 @@
     "license": "AGPL-3",
     "depends": ["sale"],
     "data": [
-        "security/ir.model.access.csv",
         "views/sale_order_views.xml",
+        "security/ir.access.csv",
     ],
     "maintainers": ["smaciaosi", "dreispt", "ckolobow"],
 }
