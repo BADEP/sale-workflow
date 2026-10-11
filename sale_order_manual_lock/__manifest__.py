@@ -3,7 +3,7 @@
 {
     "name": "Sale Order Manual Lock",
     "summary": "Adds manual lock and unlock buttons to sale orders.",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Sales Management",
     "license": "AGPL-3",
     "author": "NICO SOLUTIONS - ENGINEERING & IT, Odoo Community Association (OCA)",
