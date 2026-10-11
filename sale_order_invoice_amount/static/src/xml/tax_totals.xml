@@ -15,7 +15,7 @@
                 <td>
                     <span
                         style="white-space: nowrap;"
-                        t-esc="totals.formatted_amount_invoiced"
+                        t-out="totals.formatted_amount_invoiced"
                     />
                 </td>
             </tr>
@@ -28,7 +28,7 @@
                 <td>
                     <span
                         style="white-space: nowrap; "
-                        t-esc="totals.formatted_amount_to_invoice"
+                        t-out="totals.formatted_amount_to_invoice"
                     />
                 </td>
             </tr>
