@@ -5,6 +5,8 @@ from odoo.addons.sales_team_security.tests.common import TestCommon
 
 
 class TestSalesTeamSecuritySale(TestCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
