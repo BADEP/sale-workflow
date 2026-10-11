@@ -11,6 +11,6 @@ class ResPartner(models.Model):
 
     def _get_complete_name(self):
         res = super()._get_complete_name()
-        if not self.is_dropship_address or not self.name or not self.type == "delivery":
+        if not self.is_dropship_address or not self.name or self.type != "delivery":
             return res
         return self.name.strip()

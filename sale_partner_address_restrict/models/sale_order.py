@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    partner_address_restriction_domain = fields.Binary(
+    partner_address_restriction_domain = fields.Json(
         compute="_compute_partner_address_restriction_domain",
         help="This is the computed domain to filter delivery and invoicing addresses.",
     )
