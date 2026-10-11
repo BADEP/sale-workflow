@@ -43,8 +43,7 @@ class SaleImportProducts(models.TransientModel):
                 "price_unit": item.product_id.list_price,
             }
         )
-        line_values = sale_line._convert_to_write(sale_line._cache)
-        return line_values
+        return sale_line._convert_to_write(sale_line._cache)
 
     def select_products(self):
         so_obj = self.env["sale.order"]
@@ -67,10 +66,8 @@ class SaleImportProductsItem(models.TransientModel):
     _name = "sale.import.products.items"
     _description = "Sale Import Products Items"
 
-    wizard_id = fields.Many2one(string="Wizard", comodel_name="sale.import.products")
-    product_id = fields.Many2one(
-        string="Product", comodel_name="product.product", required=True
-    )
+    wizard_id = fields.Many2one(comodel_name="sale.import.products")
+    product_id = fields.Many2one(comodel_name="product.product", required=True)
     quantity = fields.Float(
         digits="Product Unit of Measure", default=1.0, required=True
     )
