@@ -15,6 +15,8 @@ from .common import TestCommon
 
 @freeze_time("2025-04-01 12:00:00")
 class TestSalePrimeship(TestCommon):
+    _test_user_groups = None
+
     def test_compute_name(self):
         primeship = self.make_primeship("2024-01-01", "2024-12-31")
         self.assertEqual(primeship.name, "2024-01-01 - 2024-12-31 Primeship")

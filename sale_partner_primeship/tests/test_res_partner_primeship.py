@@ -10,6 +10,8 @@ from .common import TestCommon
 
 @freeze_time("2025-04-01 12:00:00")
 class TestResPartnerPrimeship(TestCommon):
+    _test_user_groups = None
+
     def test_compute_active_primeship(self):
         active_primeship = self.make_primeship(
             date.today() - timedelta(days=1), date.today() + timedelta(days=30)

@@ -11,6 +11,8 @@ from .common import TestCommon
 
 @freeze_time("2025-04-01 12:00:00")
 class TestSaleOrderPrimeship(TestCommon):
+    _test_user_groups = None
+
     def test_action_confirm_creates_primeship(self):
         order_line = self.make_order_line()
         self.order.action_confirm()
