@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="sale_order_portal_content_sequence"
+        inherit_id="sale.sale_order_portal_content"
+    >
+        <th id="product_name_header" position="before">
+            <th id="line_number_header" class="text-start">
+                #
+            </th>
+        </th>
+        <td name="td_product_name" position="before">
+            <td id="line_number" class="text-start">
+                <span t-field="line.visible_sequence" />
+            </td>
+        </td>
+    </template>
+</odoo>
