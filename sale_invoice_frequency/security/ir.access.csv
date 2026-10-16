@@ -1,0 +1,3 @@
+id,name,model_id,group_id/id,operation,domain
+access_sale_invoice_frequency_user,access_sale_invoice_frequency_user,sale.invoice.frequency,base.group_user,r,
+access_sale_invoice_frequency_manager,access_sale_invoice_frequency_manager,sale.invoice.frequency,account.group_account_invoice,crud,
