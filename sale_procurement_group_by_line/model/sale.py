@@ -29,7 +29,7 @@ class SaleOrderLine(models.Model):
         """
         Launch procurement group run method.
         """
-        if self._context.get("skip_procurement"):
+        if self.env.context.get("skip_procurement"):
             return True
         precision = self.env["decimal.precision"].precision_get(
             "Product Unit of Measure"
