@@ -19,7 +19,8 @@ class TestBaseSubstate(TransactionCase):
         cls.substate_under_nego = cls.base_substate.create(
             {
                 "name": "In negotiation",
-                "sequence": 1,
+                # lower than demo substates so it is the default draft substate
+                "sequence": 0,
                 "target_state_value_id": cls.target_draft.id,
             }
         )

@@ -13,5 +13,5 @@ class BaseSubstateType(models.Model):
 
 
 class SaleOrder(models.Model):
-    _inherit = ["sale.order", "base.substate.mixin"]
+    _inherit = ["sale.order", "base.substate.mixin"]  # noqa: RUF012
     _name = "sale.order"
