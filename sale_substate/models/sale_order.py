@@ -1,8 +1,6 @@
 # Copyright 2019 Akretion
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import typing
-
 from odoo import fields, models
 
 
@@ -15,5 +13,5 @@ class BaseSubstateType(models.Model):
 
 
 class SaleOrder(models.Model):
-    _inherit: typing.ClassVar[list[str]] = ["sale.order", "base.substate.mixin"]
+    _inherit = ["sale.order", "base.substate.mixin"]  # noqa: RUF012
     _name = "sale.order"
