@@ -1,12 +1,13 @@
 # Copyright 2018-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
 from odoo import api, fields, models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = ["sale.order.line", "product.secondary.unit.mixin"]
+    _inherit = ["sale.order.line", "product.secondary.unit.mixin"]  # noqa: RUF012
     _name = "sale.order.line"
-    _secondary_unit_fields = {
+    _secondary_unit_fields = {  # noqa: RUF012
         "qty_field": "product_uom_qty",
         "uom_field": "product_uom_id",
     }
