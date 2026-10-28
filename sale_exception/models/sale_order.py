@@ -3,13 +3,11 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import typing
-
 from odoo import api, models
 
 
 class SaleOrder(models.Model):
-    _inherit: typing.ClassVar[list[str]] = ["sale.order", "base.exception"]
+    _inherit = ["sale.order", "base.exception"]  # noqa: RUF012
     _name = "sale.order"
     _order = "main_exception_id asc, date_order desc, name desc"
 
