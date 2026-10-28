@@ -7,7 +7,7 @@ from odoo import api, models
 
 
 class SaleOrder(models.Model):
-    _inherit = ["sale.order", "base.exception"]
+    _inherit = ["sale.order", "base.exception"]  # noqa: RUF012
     _name = "sale.order"
     _order = "main_exception_id asc, date_order desc, name desc"
 
@@ -50,7 +50,7 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         if self.detect_exceptions():
             if not self.env.company.sale_exception_show_popup:
-                return
+                return None
             return self._popup_exceptions()
         return super().action_confirm()
 
