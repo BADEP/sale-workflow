@@ -1,13 +1,12 @@
 # Copyright 2023 Tecnativa - Sergio Teruel
 # Copyright 2023 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from typing import ClassVar
 
 from odoo import api, fields, models
 
 
 class StockMove(models.Model):
-    _inherit: ClassVar[list[str]] = ["stock.move", "product.elaboration.mixin"]
+    _inherit = ["stock.move", "product.elaboration.mixin"]  # noqa: RUF012
     _name = "stock.move"
 
     # Helper fields to display elaborations in tree view
