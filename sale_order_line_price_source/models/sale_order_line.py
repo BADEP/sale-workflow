@@ -4,7 +4,7 @@ from odoo import api, fields, models
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    _PRICE_SOURCE_SYNC_FIELDS = {
+    _PRICE_SOURCE_SYNC_FIELDS = {  # noqa: RUF012
         "product_id",
         "product_uom_id",
         "product_uom_qty",
