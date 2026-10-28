@@ -19,13 +19,13 @@ class TestSaleElaboration(AccountTestInvoicingCommon):
         cls.category_1 = cls.env["product.category"].create({"name": "Meat"})
         cls.category_2 = cls.env["product.category"].create({"name": "Fish"})
         cls.product = cls.env["product.product"].create(
-            {"name": "test", "tracking": "none", "list_price": 1000}
+            {"name": "test", "tracking": False, "list_price": 1000}
         )
         cls.product_2 = cls.env["product.product"].create(
-            {"name": "test 2", "tracking": "none", "list_price": 1000}
+            {"name": "test 2", "tracking": False, "list_price": 1000}
         )
         cls.product_3 = cls.env["product.product"].create(
-            {"name": "test 2", "tracking": "none", "list_price": 1000}
+            {"name": "test 2", "tracking": False, "list_price": 1000}
         )
         cls.product.categ_id = cls.category_1
         cls.product_2.categ_id = cls.category_2
@@ -55,7 +55,7 @@ class TestSaleElaboration(AccountTestInvoicingCommon):
                     Command.create(
                         {
                             "applied_on": "3_global",
-                            "compute_price": "formula",
+                            "compute_price": "markup",
                             "base": "list_price",
                         },
                     )
@@ -122,7 +122,7 @@ class TestSaleElaboration(AccountTestInvoicingCommon):
         self.assertEqual(self.order.order_line.elaboration_note, "Some details")
 
     def test_sale_elaboration_onchange_disallow_auto_notes(self):
-        self.env["ir.config_parameter"].sudo().set_param(
+        self.env["ir.config_parameter"].sudo().set_str(
             "sale_elaboration.auto_notes", "0"
         )
         order_form = Form(self.order)
@@ -194,12 +194,14 @@ class TestSaleElaboration(AccountTestInvoicingCommon):
 
     def test_multi_elaboration_per_line(self):
         product2 = self.env["product.product"].create({"name": "product 2"})
-        with Form(self.order) as order_form:
-            with order_form.order_line.new() as line_form:
-                line_form.product_id = product2
-                line_form.product_uom_qty = 1
-                line_form.elaboration_ids.add(self.elaboration_a)
-                line_form.elaboration_ids.add(self.elaboration_b)
+        with (
+            Form(self.order) as order_form,
+            order_form.order_line.new() as line_form,
+        ):
+            line_form.product_id = product2
+            line_form.product_uom_qty = 1
+            line_form.elaboration_ids.add(self.elaboration_a)
+            line_form.elaboration_ids.add(self.elaboration_b)
         self.order.action_confirm()
         move_ids = self.order.picking_ids.move_ids
         move_line_a = move_ids.filtered(lambda r: r.product_id == self.product)
